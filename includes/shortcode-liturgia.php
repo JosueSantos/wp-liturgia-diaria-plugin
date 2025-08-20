@@ -257,7 +257,6 @@ function liturgia_diaria_shortcode() {
         <?php if (!empty($segunda)) : ?>
             <div class="ld-leitura">
                 <h3 class="ld-leitura-titulo"><?php echo esc_html($segunda['title']); ?></h3>
-                <p class="ld-referencia">1Cor 15, 20-27</p>
                 <p><strong><?php echo esc_html($segunda['head']); ?></strong></p>
                 <p class="ld-texto"><?php echo nl2br(esc_html($segunda['text'])); ?></p>
                 <p class="ld-resposta"><em><?php echo esc_html($segunda['footer']); ?></em><br><strong><?php echo esc_html($segunda['footer_response']); ?></strong></p>
@@ -310,3 +309,4 @@ function liturgia_diaria_shortcode() {
     return ob_get_clean();
 }
 add_shortcode('liturgia_diaria', 'liturgia_diaria_shortcode');
+
