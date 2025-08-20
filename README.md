@@ -15,6 +15,8 @@ Plugin WordPress para exibir a **Liturgia Diária** (leituras da missa: primeira
 * Shortcode simples para incluir em qualquer página ou post.
 * Código aberto e disponível para contribuição.
 
+![Print](/ecodapalavra.com.br_liturgia-diaria__dia%3D2025-08-17.png)
+
 ---
 
 ## 🚀 Instalação
