@@ -1,6 +1,6 @@
 # 📖 WP Liturgia Diária CNBB
 
-![WordPress Plugin](https://img.shields.io/badge/WordPress-Liturgia%20Diária-21759B?logo=wordpress\&logoColor=white)
+![WordPress Plugin](https://img.shields.io/badge/WordPress-Liturgia%20Di%C3%A1ria%20CNBB-21759B?logo=wordpress&logoColor=white)
 ![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 ![GitHub Repo stars](https://img.shields.io/github/stars/JosueSantos/wp-liturgia-diaria-plugin?style=social)
 

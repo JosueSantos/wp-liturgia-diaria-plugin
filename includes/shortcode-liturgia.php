@@ -80,6 +80,20 @@ add_action('wp_enqueue_scripts', 'liturgia_diaria_enqueue_styles');
 // =========================
 // Shortcode [liturgia_diaria_cnbb]
 // =========================
+function formatar_liturgia_texto($texto) {
+    // Adiciona <p> e <strong> nos números de versículos
+    $texto = preg_replace(
+        '/(\d+)(?=[A-ZÁÉÍÓÚÂÊÔÃÕa-z])/u',
+        '</p><p><strong>$1</strong> ',
+        $texto
+    );
+
+    // Garante abertura inicial
+    $texto = '<p>' . $texto . '</p>';
+
+    return $texto;
+}
+
 function liturgia_diaria_cnbb_shortcode() {
     // Corrigir a data: verificar se 'dia' está no formato correto
     if (isset($_GET['dia']) && preg_match('/^\d{4}-\d{2}-\d{2}$/', $_GET['dia'])) {
@@ -125,35 +139,62 @@ function liturgia_diaria_cnbb_shortcode() {
     ?>
     <form method="get" class="liturgia-form" style="margin-bottom:1em;">
         <label for="dia">Escolha a data:</label>
-        <input type="date" id="dia" name="dia" value="<?php echo esc_attr($data); ?>">
+        <input type="date" onchange="this.form.submit()" id="dia" name="dia" value="<?php echo esc_attr($data); ?>">
         <button type="submit">Ver Liturgia</button>
     </form>
 
-    <div class="liturgia-diaria">
-        <h2>Liturgia do Dia - <?php echo esc_html(date('d/m/Y', strtotime($data))); ?></h2>
-        <h3><?php echo esc_html($dados['liturgia']); ?></h3>
+    <div class="liturgia-diaria ld-container">
+        <h2 class="ld-titulo">Liturgia do Dia - <?php echo esc_html(date('d/m/Y', strtotime($data))); ?></h2>
+        
+        <div class="ld-tempo">
+            <div><?php echo esc_html($dados['liturgia']); ?></div>
+        </div>
 
         <?php if (!empty($dados['primeiraLeitura'])): ?>
-            <h4>Primeira Leitura (<?php echo esc_html($dados['primeiraLeitura']['referencia']); ?>)</h4>
-            <p><?php echo nl2br(esc_html($dados['primeiraLeitura']['texto'])); ?></p>
+            <div class="ld-leitura">
+                <h3 class="ld-leitura-titulo">Primeira Leitura (<?php echo esc_html($dados['primeiraLeitura']['referencia']); ?>)</h3>
+                <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['primeiraLeitura']['texto'])); ?></div>
+                <p class="ld-resposta">
+                  <em>- Palavra do Senhor</em>
+                  <br>
+                  <strong>- Graças a Deus</strong>
+                </p>
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($dados['salmo'])): ?>
-            <h4>Salmo Responsorial (<?php echo esc_html($dados['salmo']['referencia']); ?>)</h4>
-            <p><strong>Refrão:</strong> <?php echo esc_html($dados['salmo']['refrao']); ?></p>
-            <p><?php echo nl2br(esc_html($dados['salmo']['texto'])); ?></p>
+            <div class="ld-salmo">
+                <h3 class="ld-leitura-titulo">Salmo Responsorial (<?php echo esc_html($dados['salmo']['referencia']); ?>)</h3>
+                <p class="ld-refrao"><strong><?php echo esc_html($dados['salmo']['refrao']); ?></strong></p>
+                <p class="ld-texto"><?php echo nl2br(esc_html($dados['salmo']['texto'])); ?></p>
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($dados['segundaLeitura']) && is_array($dados['segundaLeitura'])): ?>
-            <h4>Segunda Leitura (<?php echo esc_html($dados['segundaLeitura']['referencia']); ?>)</h4>
-            <p><?php echo nl2br(esc_html($dados['segundaLeitura']['texto'])); ?></p>
+            <div class="ld-leitura">
+                <h3 class="ld-leitura-titulo">Segunda Leitura (<?php echo esc_html($dados['segundaLeitura']['referencia']); ?>)</h3>
+                <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['segundaLeitura']['texto'])); ?></div>
+                <p class="ld-resposta">
+                  <em>- Palavra do Senhor</em>
+                  <br>
+                  <strong>- Graças a Deus</strong>
+                </p>
+            </div>
         <?php endif; ?>
 
         <?php if (!empty($dados['evangelho'])): ?>
-            <h4>Evangelho (<?php echo esc_html($dados['evangelho']['referencia']); ?>)</h4>
-            <p><?php echo nl2br(esc_html($dados['evangelho']['texto'])); ?></p>
+            <div class="ld-evangelho ld-destaque-evangelho">
+                <h3 class="ld-leitura-titulo">Evangelho (<?php echo esc_html($dados['evangelho']['referencia']); ?>)</h3>
+                <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['evangelho']['texto'])); ?></div>
+                <p class="ld-resposta">
+                  <em>- Palavra da Salvação</em>
+                  <br>
+                  <strong>- Glória a Vós, Senhor</strong>
+                </p>
+            </div>
         <?php endif; ?>
     </div>
+
 
     <!-- Dados Estruturados JSON-LD -->
     <script type="application/ld+json">
@@ -166,11 +207,7 @@ function liturgia_diaria_cnbb_shortcode() {
         "@type": "Organization",
         "name": "CNBB"
       },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Eco da Palavra",
-        "url": "<?php echo esc_url(get_site_url()); ?>"
-      },
+      "keywords": "Liturgia diária, Bíblia, Evangelho, Salmo, Leitura do dia, Missa, Leituras católicas",
       "articleBody": "<?php echo esc_js(strip_tags($dados['primeiraLeitura']['texto'] . ' ' . $dados['salmo']['texto'] . ' ' . ($dados['segundaLeitura']['texto'] ?? '') . ' ' . $dados['evangelho']['texto'])); ?>"
     }
     </script>
@@ -289,14 +326,6 @@ function liturgia_diaria_shortcode() {
         "@type": "Person",
         "name": "Josué Santos",
         "url": "https://josuesantos.github.io/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Eco da Palavra",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://ecodapalavra.com.br/logo.png"
-        }
       },
       "articleSection": "Liturgia Diária",
       "keywords": "Liturgia diária, Bíblia, Evangelho, Salmo, Leitura do dia, Missa, Leituras católicas",

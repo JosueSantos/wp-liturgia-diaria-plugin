@@ -3,7 +3,7 @@
  * Plugin Name: Liturgia Diária CNBB
  * Plugin URI:  https://github.com/JosueSantos/wp-liturgia-diaria-plugin
  * Description: Exibe a liturgia diária (leituras, salmo, evangelho) com base em APIs públicas da CNBB. Inclui shortcodes [liturgia_diaria_cnbb] e [liturgia_diaria].
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Josué Santos
  * Author URI:  https://josuesantos.github.io/
  * License:     GPL2
