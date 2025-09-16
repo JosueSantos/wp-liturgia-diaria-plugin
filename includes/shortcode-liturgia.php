@@ -147,8 +147,8 @@ function liturgia_diaria_cnbb_shortcode() {
         <h2 class="ld-titulo">Liturgia do Dia - <?php echo esc_html(date('d/m/Y', strtotime($data))); ?></h2>
         
         <div class="ld-tempo">
-            <div><?php echo esc_html($dados['liturgia']); ?></div>
-            <div><b>Cor:</b> <?php echo esc_attr($dados['cor']); ?></div>
+            <div><strong><?php echo esc_html($dados['liturgia']); ?></strong></div>
+            <div><strong>Cor:</strong> <?php echo esc_attr($dados['cor']); ?></div>
         </div>
 
         <?php if (!empty($dados['primeiraLeitura'])): ?>
