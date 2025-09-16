@@ -148,11 +148,13 @@ function liturgia_diaria_cnbb_shortcode() {
         
         <div class="ld-tempo">
             <div><?php echo esc_html($dados['liturgia']); ?></div>
+            <div><b>Cor:</b> <?php echo esc_attr($dados['cor']); ?></div>
         </div>
 
         <?php if (!empty($dados['primeiraLeitura'])): ?>
             <div class="ld-leitura">
                 <h3 class="ld-leitura-titulo">Primeira Leitura (<?php echo esc_html($dados['primeiraLeitura']['referencia']); ?>)</h3>
+                <p><strong><?php echo esc_html($dados['primeiraLeitura']['titulo']); ?></strong></p>
                 <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['primeiraLeitura']['texto'])); ?></div>
                 <p class="ld-resposta">
                   <em>- Palavra do Senhor</em>
@@ -165,7 +167,7 @@ function liturgia_diaria_cnbb_shortcode() {
         <?php if (!empty($dados['salmo'])): ?>
             <div class="ld-salmo">
                 <h3 class="ld-leitura-titulo">Salmo Responsorial (<?php echo esc_html($dados['salmo']['referencia']); ?>)</h3>
-                <p class="ld-refrao"><strong><?php echo esc_html($dados['salmo']['refrao']); ?></strong></p>
+                <p class="ld-refrao"><strong>R- <?php echo esc_html($dados['salmo']['refrao']); ?></strong></p>
                 <p class="ld-texto"><?php echo nl2br(esc_html($dados['salmo']['texto'])); ?></p>
             </div>
         <?php endif; ?>
@@ -173,6 +175,7 @@ function liturgia_diaria_cnbb_shortcode() {
         <?php if (!empty($dados['segundaLeitura']) && is_array($dados['segundaLeitura'])): ?>
             <div class="ld-leitura">
                 <h3 class="ld-leitura-titulo">Segunda Leitura (<?php echo esc_html($dados['segundaLeitura']['referencia']); ?>)</h3>
+                <p><strong><?php echo esc_html($dados['segundaLeitura']['titulo']); ?></strong></p>
                 <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['segundaLeitura']['texto'])); ?></div>
                 <p class="ld-resposta">
                   <em>- Palavra do Senhor</em>
@@ -185,6 +188,7 @@ function liturgia_diaria_cnbb_shortcode() {
         <?php if (!empty($dados['evangelho'])): ?>
             <div class="ld-evangelho ld-destaque-evangelho">
                 <h3 class="ld-leitura-titulo">Evangelho (<?php echo esc_html($dados['evangelho']['referencia']); ?>)</h3>
+                <p><strong><?php echo esc_html($dados['evangelho']['titulo']); ?></strong></p>
                 <div class="ld-texto"><?php echo wp_kses_post(formatar_liturgia_texto($dados['evangelho']['texto'])); ?></div>
                 <p class="ld-resposta">
                   <em>- Palavra da Salvação</em>
